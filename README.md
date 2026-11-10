@@ -27,7 +27,8 @@ Add the package with Swift Package Manager and depend on the products you use:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/amazon-connect/touchpoint-ios", from: "<release>"),
+    // Before 1.0.0 a minor release may change the API, so take patches only.
+    .package(url: "https://github.com/amazon-connect/touchpoint-ios", .upToNextMinor(from: "0.1.0")),
 ],
 targets: [
     .target(name: "MyApp", dependencies: [
