@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Every target embeds its own manifest. Keep accurate as code lands; required-reason
+	     API usage (UserDefaults, file timestamps, disk space, system boot time, active keyboards)
+	     must be declared here when first used. -->
+	<!-- This target itself collects nothing. The upstream Amazon Connect chat SDK it links ships
+	     its own manifest declaring attachment and analytics collection; a host embedding
+	     TouchpointChat must re-answer its App Privacy questionnaire accordingly. -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
+</dict>
+</plist>

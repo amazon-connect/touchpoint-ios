@@ -1,0 +1,85 @@
+{
+  "AWSClientRuntime": {
+    "accessedAPI": {},
+    "collectedData": [
+      {
+        "linked": false,
+        "purposes": [
+          "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+        ],
+        "tracking": false,
+        "type": "NSPrivacyCollectedDataTypeOtherDiagnosticData"
+      }
+    ],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "AmazonChimeSDK": {
+    "accessedAPI": {},
+    "collectedData": [
+      {
+        "linked": false,
+        "purposes": [
+          "Collects battery level, charging state, and low memory warnings to monitor device health during Amazon Chime SDK meeting sessions. This helps diagnose session quality issues and improve overall performance and reliability."
+        ],
+        "tracking": false,
+        "type": "NSPrivacyCollectedDataTypePerformanceData"
+      }
+    ],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "AmazonChimeSDKMedia": {
+    "accessedAPI": {
+      "NSPrivacyAccessedAPICategoryFileTimestamp": [
+        "C617.1"
+      ],
+      "NSPrivacyAccessedAPICategorySystemBootTime": [
+        "35F9.1"
+      ]
+    },
+    "collectedData": [],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "AmazonConnectChatIOS": {
+    "accessedAPI": {},
+    "collectedData": [
+      {
+        "linked": false,
+        "purposes": [
+          "app_functionality"
+        ],
+        "tracking": false,
+        "type": "attachments"
+      },
+      {
+        "linked": false,
+        "purposes": [
+          "analytics",
+          "app_functionality"
+        ],
+        "tracking": false,
+        "type": "product_interaction"
+      }
+    ],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "AwsCommonRuntimeKit": {
+    "accessedAPI": {
+      "NSPrivacyAccessedAPICategoryFileTimestamp": [
+        "0A2A.1"
+      ]
+    },
+    "collectedData": [],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "ClientRuntime": {
+    "accessedAPI": {},
+    "collectedData": [],
+    "tracking": false,
+    "trackingDomains": []
+  }
+}

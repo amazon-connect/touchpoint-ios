@@ -1,0 +1,746 @@
+{
+  "de": {
+    "announcements": {
+      "choice": "{count} Option zur Auswahl",
+      "choices": "{count} Optionen zur Auswahl",
+      "received": "Antwort erhalten",
+      "thinking": "Denkt nach"
+    },
+    "authentication": {
+      "authenticate": "Authentifizieren",
+      "continueWithoutSigningIn": "Ohne Anmeldung fortfahren",
+      "heading": "Bitte authentifizieren",
+      "lockedInputHint": "Bitte die Authentifizierung abschließen oder überspringen, um fortzufahren.",
+      "status": {
+        "cancelled": "Authentifizierung abgebrochen",
+        "expired": "Authentifizierung abgelaufen",
+        "failed": "Authentifizierung fehlgeschlagen",
+        "in_progress": "Authentifizierung läuft",
+        "prompt": "Bitte authentifizieren",
+        "success": "Authentifizierung erfolgreich"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Transkript herunterladen",
+    "endConversationButtonLabel": "Unterhaltung beenden",
+    "endConversationConfirm": {
+      "body": "Sie sind dabei, die aktuelle Unterhaltung zu beenden. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "confirm": "Unterhaltung beenden",
+      "title": "Sind Sie sicher?"
+    },
+    "escalationAttemptNotice": "Ich versuche, Ihre Unterhaltung an einen Mitarbeiter weiterzuleiten.",
+    "escalationButtonLabel": "Mit einem Mitarbeiter sprechen",
+    "escalationNotice": "Ihre Unterhaltung wurde an einen Mitarbeiter weitergeleitet",
+    "guide": {
+      "close": "Schließen",
+      "defaultSubtitle": "",
+      "defaultTitle": "Leitfaden",
+      "error": "Leitfaden konnte nicht geladen werden",
+      "label": "Leitfaden",
+      "loading": "Leitfaden wird geladen…",
+      "placeholder": "Dieser Leitfaden wird hier geöffnet.",
+      "status": {
+        "complete": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "notStarted": "Nicht begonnen"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Zugestellt",
+      "failed": "Fehlgeschlagen",
+      "read": "Gelesen",
+      "sending": "Wird gesendet",
+      "sent": "Gesendet"
+    },
+    "participants": {
+      "agent": "Mitarbeiter",
+      "bot": "KI",
+      "you": "Sie"
+    },
+    "restartConversationButtonLabel": "Unterhaltung neu starten",
+    "sendMessageButtonLabel": "Nachricht senden",
+    "startNewConversationButtonLabel": "Neue Unterhaltung starten"
+  },
+  "en": {
+    "announcements": {
+      "choice": "{count} option to choose from",
+      "choices": "{count} options to choose from",
+      "received": "Response received",
+      "thinking": "Thinking"
+    },
+    "authentication": {
+      "authenticate": "Authenticate",
+      "continueWithoutSigningIn": "Continue without signing in",
+      "heading": "Please authenticate",
+      "lockedInputHint": "Complete or skip authentication before continuing.",
+      "status": {
+        "cancelled": "Authentication cancelled",
+        "expired": "Authentication expired",
+        "failed": "Authentication failed",
+        "in_progress": "Authentication in progress",
+        "prompt": "Please authenticate",
+        "success": "Authentication successful"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Download transcript",
+    "endConversationButtonLabel": "End conversation",
+    "endConversationConfirm": {
+      "body": "You are about to end the current conversation. This action can't be undone.",
+      "cancel": "Cancel",
+      "confirm": "End conversation",
+      "title": "Are you sure?"
+    },
+    "escalationAttemptNotice": "I'm attempting to transfer your conversation to an agent",
+    "escalationButtonLabel": "Talk to the agent",
+    "escalationNotice": "Your conversation has been transferred to an agent",
+    "guide": {
+      "close": "Close",
+      "defaultSubtitle": "",
+      "defaultTitle": "Guide",
+      "error": "Couldn't load the guide",
+      "label": "Guide",
+      "loading": "Loading guide…",
+      "placeholder": "This guide will open here.",
+      "status": {
+        "complete": "Complete",
+        "inProgress": "In progress",
+        "notStarted": "Not started"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Delivered",
+      "failed": "Failed",
+      "read": "Read",
+      "sending": "Sending",
+      "sent": "Sent"
+    },
+    "participants": {
+      "agent": "Agent",
+      "bot": "AI",
+      "you": "You"
+    },
+    "restartConversationButtonLabel": "Restart conversation",
+    "sendMessageButtonLabel": "Send message",
+    "startNewConversationButtonLabel": "Start new conversation"
+  },
+  "es": {
+    "announcements": {
+      "choice": "{count} opción para elegir",
+      "choices": "{count} opciones para elegir",
+      "received": "Respuesta recibida",
+      "thinking": "Pensando"
+    },
+    "authentication": {
+      "authenticate": "Autenticar",
+      "continueWithoutSigningIn": "Continuar sin iniciar sesión",
+      "heading": "Por favor, autentícate",
+      "lockedInputHint": "Completa u omite la autenticación antes de continuar.",
+      "status": {
+        "cancelled": "Autenticación cancelada",
+        "expired": "La autenticación expiró",
+        "failed": "Error de autenticación",
+        "in_progress": "Autenticación en curso",
+        "prompt": "Por favor, autentícate",
+        "success": "Autenticación exitosa"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Descargar transcripción",
+    "endConversationButtonLabel": "Finalizar conversación",
+    "endConversationConfirm": {
+      "body": "Estás a punto de finalizar la conversación actual. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Finalizar conversación",
+      "title": "¿Estás seguro?"
+    },
+    "escalationAttemptNotice": "Estoy intentando transferir tu conversación a un agente.",
+    "escalationButtonLabel": "Hablar con un agente",
+    "escalationNotice": "Su conversación ha sido transferida a un agente",
+    "guide": {
+      "close": "Cerrar",
+      "defaultSubtitle": "",
+      "defaultTitle": "Guía",
+      "error": "No se pudo cargar la guía",
+      "label": "Guía",
+      "loading": "Cargando guía…",
+      "placeholder": "Esta guía se abrirá aquí.",
+      "status": {
+        "complete": "Completada",
+        "inProgress": "En progreso",
+        "notStarted": "Sin iniciar"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Entregado",
+      "failed": "Error",
+      "read": "Leído",
+      "sending": "Enviando",
+      "sent": "Enviado"
+    },
+    "participants": {
+      "agent": "Agente",
+      "bot": "IA",
+      "you": "Tú"
+    },
+    "restartConversationButtonLabel": "Reiniciar conversación",
+    "sendMessageButtonLabel": "Enviar mensaje",
+    "startNewConversationButtonLabel": "Iniciar nueva conversación"
+  },
+  "fr": {
+    "announcements": {
+      "choice": "{count} option proposée",
+      "choices": "{count} options proposées",
+      "received": "Réponse reçue",
+      "thinking": "Réflexion en cours"
+    },
+    "authentication": {
+      "authenticate": "S'authentifier",
+      "continueWithoutSigningIn": "Continuer sans se connecter",
+      "heading": "Veuillez vous authentifier",
+      "lockedInputHint": "Terminez ou ignorez l'authentification avant de continuer.",
+      "status": {
+        "cancelled": "Authentification annulée",
+        "expired": "Authentification expirée",
+        "failed": "Échec de l'authentification",
+        "in_progress": "Authentification en cours",
+        "prompt": "Veuillez vous authentifier",
+        "success": "Authentification réussie"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Télécharger la transcription",
+    "endConversationButtonLabel": "Terminer la conversation",
+    "endConversationConfirm": {
+      "body": "Vous êtes sur le point de terminer la conversation en cours. Cette action est irréversible.",
+      "cancel": "Annuler",
+      "confirm": "Terminer la conversation",
+      "title": "Êtes-vous sûr ?"
+    },
+    "escalationAttemptNotice": "Je tente de transférer votre conversation à un agent.",
+    "escalationButtonLabel": "Parler à un agent",
+    "escalationNotice": "Votre conversation a été transférée à un agent",
+    "guide": {
+      "close": "Fermer",
+      "defaultSubtitle": "",
+      "defaultTitle": "Guide",
+      "error": "Impossible de charger le guide",
+      "label": "Guide",
+      "loading": "Chargement du guide…",
+      "placeholder": "Ce guide s'ouvrira ici.",
+      "status": {
+        "complete": "Terminé",
+        "inProgress": "En cours",
+        "notStarted": "Non commencé"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Distribué",
+      "failed": "Échec",
+      "read": "Lu",
+      "sending": "Envoi en cours",
+      "sent": "Envoyé"
+    },
+    "participants": {
+      "agent": "Agent",
+      "bot": "IA",
+      "you": "Vous"
+    },
+    "restartConversationButtonLabel": "Redémarrer la conversation",
+    "sendMessageButtonLabel": "Envoyer le message",
+    "startNewConversationButtonLabel": "Démarrer une nouvelle conversation"
+  },
+  "frCA": {
+    "announcements": {
+      "choice": "{count} option proposée",
+      "choices": "{count} options proposées",
+      "received": "Réponse reçue",
+      "thinking": "Réflexion en cours"
+    },
+    "authentication": {
+      "authenticate": "S'authentifier",
+      "continueWithoutSigningIn": "Continuer sans se connecter",
+      "heading": "Veuillez vous authentifier",
+      "lockedInputHint": "Terminez ou ignorez l'authentification avant de continuer.",
+      "status": {
+        "cancelled": "Authentification annulée",
+        "expired": "Authentification expirée",
+        "failed": "Échec de l'authentification",
+        "in_progress": "Authentification en cours",
+        "prompt": "Veuillez vous authentifier",
+        "success": "Authentification réussie"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Télécharger la transcription",
+    "endConversationButtonLabel": "Terminer la conversation",
+    "endConversationConfirm": {
+      "body": "Vous êtes sur le point de terminer la conversation en cours. Cette action est irréversible.",
+      "cancel": "Annuler",
+      "confirm": "Terminer la conversation",
+      "title": "Êtes-vous sûr?"
+    },
+    "escalationAttemptNotice": "Je tente de transférer votre conversation à un agent.",
+    "escalationButtonLabel": "Parler à un agent",
+    "escalationNotice": "Votre conversation a été transférée à un agent",
+    "guide": {
+      "close": "Fermer",
+      "defaultSubtitle": "",
+      "defaultTitle": "Guide",
+      "error": "Impossible de charger le guide",
+      "label": "Guide",
+      "loading": "Chargement du guide…",
+      "placeholder": "Ce guide s'ouvrira ici.",
+      "status": {
+        "complete": "Terminé",
+        "inProgress": "En cours",
+        "notStarted": "Non commencé"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Distribué",
+      "failed": "Échec",
+      "read": "Lu",
+      "sending": "Envoi en cours",
+      "sent": "Envoyé"
+    },
+    "participants": {
+      "agent": "Agent",
+      "bot": "IA",
+      "you": "Vous"
+    },
+    "restartConversationButtonLabel": "Redémarrer la conversation",
+    "sendMessageButtonLabel": "Envoyer le message",
+    "startNewConversationButtonLabel": "Démarrer une nouvelle conversation"
+  },
+  "id": {
+    "announcements": {
+      "choice": "{count} pilihan tersedia",
+      "choices": "{count} pilihan tersedia",
+      "received": "Respons diterima",
+      "thinking": "Sedang berpikir"
+    },
+    "authentication": {
+      "authenticate": "Autentikasi",
+      "continueWithoutSigningIn": "Lanjutkan tanpa masuk",
+      "heading": "Silakan lakukan autentikasi",
+      "lockedInputHint": "Selesaikan atau lewati autentikasi sebelum melanjutkan.",
+      "status": {
+        "cancelled": "Autentikasi dibatalkan",
+        "expired": "Autentikasi kedaluwarsa",
+        "failed": "Autentikasi gagal",
+        "in_progress": "Autentikasi sedang berlangsung",
+        "prompt": "Silakan lakukan autentikasi",
+        "success": "Autentikasi berhasil"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Unduh transkrip",
+    "endConversationButtonLabel": "Akhiri percakapan",
+    "endConversationConfirm": {
+      "body": "Anda akan mengakhiri percakapan saat ini. Tindakan ini tidak dapat dibatalkan.",
+      "cancel": "Batal",
+      "confirm": "Akhiri percakapan",
+      "title": "Apakah Anda yakin?"
+    },
+    "escalationAttemptNotice": "Saya sedang mencoba mengalihkan percakapan Anda ke agen.",
+    "escalationButtonLabel": "Bicara dengan agen",
+    "escalationNotice": "Percakapan Anda telah dialihkan ke agen",
+    "guide": {
+      "close": "Tutup",
+      "defaultSubtitle": "",
+      "defaultTitle": "Panduan",
+      "error": "Tidak dapat memuat panduan",
+      "label": "Panduan",
+      "loading": "Memuat panduan…",
+      "placeholder": "Panduan ini akan terbuka di sini.",
+      "status": {
+        "complete": "Selesai",
+        "inProgress": "Sedang berlangsung",
+        "notStarted": "Belum dimulai"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Terkirim ke penerima",
+      "failed": "Gagal",
+      "read": "Dibaca",
+      "sending": "Mengirim",
+      "sent": "Terkirim"
+    },
+    "participants": {
+      "agent": "Agen",
+      "bot": "AI",
+      "you": "Anda"
+    },
+    "restartConversationButtonLabel": "Mulai ulang percakapan",
+    "sendMessageButtonLabel": "Kirim pesan",
+    "startNewConversationButtonLabel": "Mulai percakapan baru"
+  },
+  "it": {
+    "announcements": {
+      "choice": "{count} opzione tra cui scegliere",
+      "choices": "{count} opzioni tra cui scegliere",
+      "received": "Risposta ricevuta",
+      "thinking": "Elaborazione in corso"
+    },
+    "authentication": {
+      "authenticate": "Autentica",
+      "continueWithoutSigningIn": "Continua senza accedere",
+      "heading": "Autenticati",
+      "lockedInputHint": "Completa o salta l'autenticazione prima di continuare.",
+      "status": {
+        "cancelled": "Autenticazione annullata",
+        "expired": "Autenticazione scaduta",
+        "failed": "Autenticazione non riuscita",
+        "in_progress": "Autenticazione in corso",
+        "prompt": "Autenticati",
+        "success": "Autenticazione riuscita"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Scarica trascrizione",
+    "endConversationButtonLabel": "Termina conversazione",
+    "endConversationConfirm": {
+      "body": "Stai per terminare la conversazione corrente. Questa azione non può essere annullata.",
+      "cancel": "Annulla",
+      "confirm": "Termina conversazione",
+      "title": "Sei sicuro?"
+    },
+    "escalationAttemptNotice": "Sto provando a trasferire la tua conversazione a un operatore.",
+    "escalationButtonLabel": "Parla con un operatore",
+    "escalationNotice": "La tua conversazione è stata trasferita a un operatore",
+    "guide": {
+      "close": "Chiudi",
+      "defaultSubtitle": "",
+      "defaultTitle": "Guida",
+      "error": "Impossibile caricare la guida",
+      "label": "Guida",
+      "loading": "Caricamento della guida…",
+      "placeholder": "Questa guida si aprirà qui.",
+      "status": {
+        "complete": "Completato",
+        "inProgress": "In corso",
+        "notStarted": "Non iniziato"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Consegnato",
+      "failed": "Non riuscito",
+      "read": "Letto",
+      "sending": "Invio in corso",
+      "sent": "Inviato"
+    },
+    "participants": {
+      "agent": "Operatore",
+      "bot": "IA",
+      "you": "Tu"
+    },
+    "restartConversationButtonLabel": "Riavvia conversazione",
+    "sendMessageButtonLabel": "Invia messaggio",
+    "startNewConversationButtonLabel": "Avvia nuova conversazione"
+  },
+  "ja": {
+    "announcements": {
+      "choice": "選択肢が{count}件あります",
+      "choices": "選択肢が{count}件あります",
+      "received": "応答を受信しました",
+      "thinking": "考えています"
+    },
+    "authentication": {
+      "authenticate": "認証する",
+      "continueWithoutSigningIn": "サインインせずに続行",
+      "heading": "認証してください",
+      "lockedInputHint": "続行する前に認証を完了またはスキップしてください。",
+      "status": {
+        "cancelled": "認証がキャンセルされました",
+        "expired": "認証の有効期限が切れました",
+        "failed": "認証に失敗しました",
+        "in_progress": "認証中",
+        "prompt": "認証してください",
+        "success": "認証に成功しました"
+      }
+    },
+    "downloadTranscriptButtonLabel": "履歴をダウンロード",
+    "endConversationButtonLabel": "会話を終了",
+    "endConversationConfirm": {
+      "body": "現在の会話を終了しようとしています。この操作は取り消せません。",
+      "cancel": "キャンセル",
+      "confirm": "会話を終了",
+      "title": "よろしいですか？"
+    },
+    "escalationAttemptNotice": "会話をオペレーターに転送しています。",
+    "escalationButtonLabel": "オペレーターと話す",
+    "escalationNotice": "会話はオペレーターに転送されました",
+    "guide": {
+      "close": "閉じる",
+      "defaultSubtitle": "",
+      "defaultTitle": "ガイド",
+      "error": "ガイドを読み込めませんでした",
+      "label": "ガイド",
+      "loading": "ガイドを読み込んでいます…",
+      "placeholder": "このガイドはここで開きます。",
+      "status": {
+        "complete": "完了",
+        "inProgress": "進行中",
+        "notStarted": "未開始"
+      }
+    },
+    "messageStatus": {
+      "delivered": "配信済み",
+      "failed": "失敗",
+      "read": "既読",
+      "sending": "送信中",
+      "sent": "送信済み"
+    },
+    "participants": {
+      "agent": "オペレーター",
+      "bot": "AI",
+      "you": "あなた"
+    },
+    "restartConversationButtonLabel": "会話を再開",
+    "sendMessageButtonLabel": "メッセージを送信",
+    "startNewConversationButtonLabel": "新しい会話を開始"
+  },
+  "ko": {
+    "announcements": {
+      "choice": "선택할 수 있는 항목 {count}개",
+      "choices": "선택할 수 있는 항목 {count}개",
+      "received": "응답을 받았습니다",
+      "thinking": "생각 중"
+    },
+    "authentication": {
+      "authenticate": "인증",
+      "continueWithoutSigningIn": "로그인하지 않고 계속",
+      "heading": "인증해 주세요",
+      "lockedInputHint": "계속하기 전에 인증을 완료하거나 건너뛰세요.",
+      "status": {
+        "cancelled": "인증 취소됨",
+        "expired": "인증 만료됨",
+        "failed": "인증 실패",
+        "in_progress": "인증 진행 중",
+        "prompt": "인증해 주세요",
+        "success": "인증 성공"
+      }
+    },
+    "downloadTranscriptButtonLabel": "대화 내용 다운로드",
+    "endConversationButtonLabel": "대화 종료",
+    "endConversationConfirm": {
+      "body": "현재 대화를 종료하려고 합니다. 이 작업은 취소할 수 없습니다.",
+      "cancel": "취소",
+      "confirm": "대화 종료",
+      "title": "확실합니까?"
+    },
+    "escalationAttemptNotice": "대화를 상담원에게 연결하고 있습니다.",
+    "escalationButtonLabel": "상담원과 대화하기",
+    "escalationNotice": "대화가 상담원에게 연결되었습니다",
+    "guide": {
+      "close": "닫기",
+      "defaultSubtitle": "",
+      "defaultTitle": "가이드",
+      "error": "가이드를 불러올 수 없습니다",
+      "label": "가이드",
+      "loading": "가이드를 불러오는 중…",
+      "placeholder": "이 가이드가 여기에 열립니다.",
+      "status": {
+        "complete": "완료",
+        "inProgress": "진행 중",
+        "notStarted": "시작 안 함"
+      }
+    },
+    "messageStatus": {
+      "delivered": "전달됨",
+      "failed": "실패",
+      "read": "읽음",
+      "sending": "보내는 중",
+      "sent": "보냄"
+    },
+    "participants": {
+      "agent": "상담원",
+      "bot": "AI",
+      "you": "나"
+    },
+    "restartConversationButtonLabel": "대화 다시 시작",
+    "sendMessageButtonLabel": "메시지 보내기",
+    "startNewConversationButtonLabel": "새 대화 시작"
+  },
+  "pt": {
+    "announcements": {
+      "choice": "{count} opção para escolher",
+      "choices": "{count} opções para escolher",
+      "received": "Resposta recebida",
+      "thinking": "Pensando"
+    },
+    "authentication": {
+      "authenticate": "Autenticar",
+      "continueWithoutSigningIn": "Continuar sem fazer login",
+      "heading": "Autentique-se",
+      "lockedInputHint": "Conclua ou ignore a autenticação antes de continuar.",
+      "status": {
+        "cancelled": "Autenticação cancelada",
+        "expired": "Autenticação expirada",
+        "failed": "Falha na autenticação",
+        "in_progress": "Autenticação em andamento",
+        "prompt": "Autentique-se",
+        "success": "Autenticação bem-sucedida"
+      }
+    },
+    "downloadTranscriptButtonLabel": "Baixar transcrição",
+    "endConversationButtonLabel": "Encerrar conversa",
+    "endConversationConfirm": {
+      "body": "Você está prestes a encerrar a conversa atual. Esta ação não pode ser desfeita.",
+      "cancel": "Cancelar",
+      "confirm": "Encerrar conversa",
+      "title": "Tem certeza?"
+    },
+    "escalationAttemptNotice": "Estou tentando transferir sua conversa para um agente.",
+    "escalationButtonLabel": "Falar com um agente",
+    "escalationNotice": "Sua conversa foi transferida para um agente",
+    "guide": {
+      "close": "Fechar",
+      "defaultSubtitle": "",
+      "defaultTitle": "Guia",
+      "error": "Não foi possível carregar o guia",
+      "label": "Guia",
+      "loading": "Carregando guia…",
+      "placeholder": "Este guia será aberto aqui.",
+      "status": {
+        "complete": "Concluído",
+        "inProgress": "Em andamento",
+        "notStarted": "Não iniciado"
+      }
+    },
+    "messageStatus": {
+      "delivered": "Entregue",
+      "failed": "Falhou",
+      "read": "Lido",
+      "sending": "Enviando",
+      "sent": "Enviado"
+    },
+    "participants": {
+      "agent": "Agente",
+      "bot": "IA",
+      "you": "Você"
+    },
+    "restartConversationButtonLabel": "Reiniciar conversa",
+    "sendMessageButtonLabel": "Enviar mensagem",
+    "startNewConversationButtonLabel": "Iniciar nova conversa"
+  },
+  "zhCN": {
+    "announcements": {
+      "choice": "有 {count} 个选项可选",
+      "choices": "有 {count} 个选项可选",
+      "received": "已收到回复",
+      "thinking": "正在思考"
+    },
+    "authentication": {
+      "authenticate": "验证",
+      "continueWithoutSigningIn": "不登录继续",
+      "heading": "请进行身份验证",
+      "lockedInputHint": "请先完成或跳过身份验证，然后再继续。",
+      "status": {
+        "cancelled": "身份验证已取消",
+        "expired": "身份验证已过期",
+        "failed": "身份验证失败",
+        "in_progress": "身份验证进行中",
+        "prompt": "请进行身份验证",
+        "success": "身份验证成功"
+      }
+    },
+    "downloadTranscriptButtonLabel": "下载对话记录",
+    "endConversationButtonLabel": "结束对话",
+    "endConversationConfirm": {
+      "body": "您即将结束当前对话。此操作无法撤消。",
+      "cancel": "取消",
+      "confirm": "结束对话",
+      "title": "确定吗？"
+    },
+    "escalationAttemptNotice": "正在尝试将您的对话转接给人工客服。",
+    "escalationButtonLabel": "联系人工客服",
+    "escalationNotice": "您的对话已转接给人工客服",
+    "guide": {
+      "close": "关闭",
+      "defaultSubtitle": "",
+      "defaultTitle": "指南",
+      "error": "无法加载指南",
+      "label": "指南",
+      "loading": "正在加载指南…",
+      "placeholder": "此指南将在此处打开。",
+      "status": {
+        "complete": "已完成",
+        "inProgress": "进行中",
+        "notStarted": "未开始"
+      }
+    },
+    "messageStatus": {
+      "delivered": "已送达",
+      "failed": "失败",
+      "read": "已读",
+      "sending": "发送中",
+      "sent": "已发送"
+    },
+    "participants": {
+      "agent": "客服",
+      "bot": "AI",
+      "you": "您"
+    },
+    "restartConversationButtonLabel": "重新开始对话",
+    "sendMessageButtonLabel": "发送消息",
+    "startNewConversationButtonLabel": "开始新对话"
+  },
+  "zhTW": {
+    "announcements": {
+      "choice": "有 {count} 個選項可選",
+      "choices": "有 {count} 個選項可選",
+      "received": "已收到回覆",
+      "thinking": "正在思考"
+    },
+    "authentication": {
+      "authenticate": "驗證",
+      "continueWithoutSigningIn": "不登入繼續",
+      "heading": "請進行驗證",
+      "lockedInputHint": "請先完成或略過驗證，然後再繼續。",
+      "status": {
+        "cancelled": "驗證已取消",
+        "expired": "驗證已過期",
+        "failed": "驗證失敗",
+        "in_progress": "驗證進行中",
+        "prompt": "請進行驗證",
+        "success": "驗證成功"
+      }
+    },
+    "downloadTranscriptButtonLabel": "下載對話記錄",
+    "endConversationButtonLabel": "結束對話",
+    "endConversationConfirm": {
+      "body": "您即將結束目前的對話。此操作無法復原。",
+      "cancel": "取消",
+      "confirm": "結束對話",
+      "title": "確定嗎？"
+    },
+    "escalationAttemptNotice": "正在嘗試將您的對話轉接給真人客服。",
+    "escalationButtonLabel": "聯絡真人客服",
+    "escalationNotice": "您的對話已轉接給真人客服",
+    "guide": {
+      "close": "關閉",
+      "defaultSubtitle": "",
+      "defaultTitle": "指南",
+      "error": "無法載入指南",
+      "label": "指南",
+      "loading": "正在載入指南…",
+      "placeholder": "此指南將在此處開啟。",
+      "status": {
+        "complete": "已完成",
+        "inProgress": "進行中",
+        "notStarted": "未開始"
+      }
+    },
+    "messageStatus": {
+      "delivered": "已送達",
+      "failed": "失敗",
+      "read": "已讀",
+      "sending": "傳送中",
+      "sent": "已傳送"
+    },
+    "participants": {
+      "agent": "客服",
+      "bot": "AI",
+      "you": "您"
+    },
+    "restartConversationButtonLabel": "重新開始對話",
+    "sendMessageButtonLabel": "傳送訊息",
+    "startNewConversationButtonLabel": "開始新對話"
+  }
+}

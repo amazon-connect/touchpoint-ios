@@ -1,0 +1,1 @@
+Nothing to see here: public hostnames like connect.aws.amazon.com and apple.com are fine.

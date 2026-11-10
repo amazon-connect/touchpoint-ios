@@ -1,0 +1,14 @@
+{ "_comment": "Violation: TouchpointCore links smithy-swift's ClientRuntime, part of the AWS SDK for Swift the chat SDK brings, without linking the chat SDK itself.",
+  "packages": {
+    "root": {
+      "products": {"TouchpointCore":["TouchpointCore"],"TouchpointChat":["TouchpointChat"],"TouchpointVoice":["TouchpointVoice"],"TouchpointLiveSync":["TouchpointLiveSync"]},
+      "targets": {
+        "TouchpointCore":     {"targets":[], "products":["ClientRuntime"]},
+        "TouchpointChat":     {"targets":["TouchpointCore"], "products":["AmazonConnectChatIOS"]},
+        "TouchpointVoice":    {"targets":["TouchpointCore"], "products":["AmazonChimeSDK"]},
+        "TouchpointLiveSync": {"targets":["TouchpointCore"], "products":[]} } },
+    "amazon-connect-chat-ios": { "products": {"AmazonConnectChatIOS":["AmazonConnectChatIOS"]}, "targets": {"AmazonConnectChatIOS": {"targets":[], "products":["AWSConnectParticipant"]}} },
+    "aws-sdk-swift": { "products": {"AWSConnectParticipant":["AWSConnectParticipant"]}, "targets": {"AWSConnectParticipant":{"targets":[],"products":["ClientRuntime"]}} },
+    "smithy-swift": { "products": {"ClientRuntime":["ClientRuntime"]}, "targets": {"ClientRuntime":{"targets":[],"products":[]}} },
+    "chime": { "products": {"AmazonChimeSDK":["AmazonChimeSDK"]}, "targets": {"AmazonChimeSDK":{"targets":[],"products":[]}} }
+  } }
