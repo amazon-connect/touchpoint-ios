@@ -14,6 +14,7 @@ CHANGELOG="$ROOT/CHANGELOG.md"
 TAG=""
 NOTES=""
 while [ $# -gt 0 ]; do
+    [ $# -ge 2 ] || { echo "usage: $0 [--tag X.Y.Z | --notes X.Y.Z]" >&2; exit 2; }
     case "$1" in
         --tag) TAG="$2"; shift 2 ;;
         --notes) NOTES="$2"; shift 2 ;;

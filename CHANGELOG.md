@@ -4,13 +4,12 @@ Notable changes to the Amazon Connect Customer Touchpoint SDK for iOS, newest fi
 follow [Semantic Versioning](https://semver.org). Until 1.0.0, a minor release may change the
 public API; a patch release never does. Each release is a git tag equal to `Touchpoint.version`.
 
-How to release is in [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
-
-## [Unreleased]
+Changes since the last release go under a `## [Unreleased]` heading at the top. How to release is
+in [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
 
 ## [0.1.0] - Unreleased
 
-First release candidate.
+First public release.
 
 ### Added
 

@@ -52,7 +52,7 @@ if swift package ${SWIFTPM_FLAGS:-} diagnose-api-breaking-changes "$BASE" \
     echo "check-api-breaks: ok (no public API break since $BASE)"
     exit 0
 fi
-if ! grep -Eq "API breakage|breaking changes? detected" "$LOG"; then
+if ! grep -Eq "API breakage|^[1-9][0-9]* breaking changes? detected" "$LOG"; then
     tail -40 "$LOG" >&2
     if [ -n "$REPORT_ONLY" ]; then
         # A listing for the reviewer must not block a merge; say loudly that it didn't run.
@@ -62,7 +62,7 @@ if ! grep -Eq "API breakage|breaking changes? detected" "$LOG"; then
     echo "check-api-breaks: FAILED to compare with $BASE (see above)" >&2
     exit 1
 fi
-grep -E "💔|API breakage|breaking changes? detected" "$LOG" >&2 || true
+grep -E "API breakage|^[1-9][0-9]* breaking changes? detected" "$LOG" >&2 || true
 if [ -n "$REPORT_ONLY" ]; then
     echo "check-api-breaks: public API changes since $BASE (listed above). Call them out in the pull request and CHANGELOG.md."
     exit 0

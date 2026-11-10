@@ -1,13 +1,7 @@
 version: 2
 updates:
-  # Swift package floors (Package.swift). A bump is a pull request; CI proves it still builds.
-  - package-ecosystem: swift
-    directory: /
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-
-  # The pinned actions in .github/workflows.
+  # The pinned actions in .github/workflows. Swift package floors in Package.swift are raised by
+  # hand, only when the SDK needs something newer.
   - package-ecosystem: github-actions
     directory: /
     schedule:

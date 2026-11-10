@@ -13,13 +13,13 @@ permissions:
 
 concurrency:
   group: codeql-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   analyze:
     name: CodeQL (swift)
     runs-on: macos-26
-    timeout-minutes: 90
+    timeout-minutes: 120
     permissions:
       contents: read
       security-events: write # upload the results to code scanning
@@ -28,23 +28,18 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Cache Swift packages
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            .build/repositories
-            .build/checkouts
-            ~/Library/Caches/org.swift.swiftpm
-          key: spm-${{ runner.os }}-${{ hashFiles('Package.swift') }}
-          restore-keys: spm-${{ runner.os }}-
-
       - uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
         with:
           languages: swift
           build-mode: manual
 
-      - name: Build
-        run: swift build
+      # The iOS build, so the CallKit, Chime, Connect chat and WebKit code is analysed too.
+      # Dependencies resolve outside the checkout, so their findings aren't reported as ours.
+      - name: Build for iOS
+        run: |
+          xcodebuild -scheme Touchpoint-Package -destination 'generic/platform=iOS' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO build
 
       - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
         with:
