@@ -1,0 +1,70 @@
+name: Release
+
+# A release is a SemVer tag pushed to a commit on main. This checks it, re-runs the gates on exactly
+# that commit, and publishes a GitHub release whose notes are the tag's CHANGELOG.md section.
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Publish release
+    runs-on: macos-26
+    timeout-minutes: 90
+    permissions:
+      contents: write # create the GitHub release
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: The tag is on main
+        run: |
+          git fetch --no-tags origin main
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main \
+            || { echo "release: $GITHUB_REF_NAME is not on main; tag the merge commit on main"; exit 1; }
+
+      - name: The tag equals Touchpoint.version and CHANGELOG.md dates it
+        run: sh Scripts/check-version.sh --tag "$GITHUB_REF_NAME"
+
+      - name: Cache Swift packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .build/repositories
+            .build/checkouts
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('Package.swift') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: make check
+        run: make check
+
+      - name: make build-ios
+        run: make build-ios
+
+      - name: API compatibility with the previous release
+        run: |
+          previous=$(git describe --tags --abbrev=0 --match '[0-9]*.[0-9]*.[0-9]*' "$GITHUB_SHA^" 2>/dev/null || true)
+          if [ -n "$previous" ]; then sh Scripts/check-api-breaks.sh "$previous"; else echo "first release: nothing to compare"; fi
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          sh Scripts/check-version.sh --notes "$TAG" > release-notes.md
+          prerelease=""
+          case "$TAG" in 0.*|*-*) prerelease="--prerelease" ;; esac
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" \
+            --notes-file release-notes.md $prerelease

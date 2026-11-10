@@ -547,7 +547,7 @@ invocations.
 
 ```sh
 make hooks     # once per clone: pre-commit (lint + staged secret scan) and pre-push (make check)
-make check     # build, test, lint, scan, dependency graph, privacy manifests, inherited declarations, string catalog, release symbols, gate self-tests, competing pins, app build
+make check     # version, build, test, lint, scan, dependency graph, privacy manifests, inherited declarations, string catalog, release symbols, gate self-tests, competing pins, app build
 make check-clt # the same minus competing pins and the app build, for a CommandLineTools-only machine
 make build-ios # all four products against a generic iOS device (needs full Xcode)
 ```
@@ -569,8 +569,12 @@ enforces:
 | `Scripts/check-release-symbols.sh` | A release build of `TouchpointCore` contains no `DevelopmentBackend` symbol |
 | `Scripts/test-scripts.sh` | Each gate still catches what it should, run against fixtures in `Tests/Fixtures` |
 | `Scripts/check-competing-pins.sh` | An integrator's own pin of the Connect, AWS or Chime SDK either resolves at or above the floor or fails naming the package and both versions |
+| `Scripts/check-version.sh` | `Touchpoint.version` is SemVer and `CHANGELOG.md` has a section for it; a release tag must equal it |
 
-How to contribute: [CONTRIBUTING.md](CONTRIBUTING.md).
+GitHub Actions runs `make check`, `make build-ios` and `Scripts/check-api-breaks.sh` (the public
+API against the last release) on every pull request, and CodeQL scans the code. How to contribute,
+and how a release is cut: [CONTRIBUTING.md](CONTRIBUTING.md). What changed in each release:
+[CHANGELOG.md](CHANGELOG.md).
 
 ## Security
 

@@ -20,16 +20,16 @@ SWIFTPM_FLAGS ?=
 XCODEBUILD   ?= xcodebuild
 SCHEME       ?= Touchpoint-Package
 
-.PHONY: check check-clt precommit build test build-ios lint scan graph privacy strings symbols scripts hooks clean pins demo demo-project declarations
+.PHONY: check check-clt precommit build test build-ios lint scan graph privacy strings symbols scripts hooks clean pins demo demo-project declarations version api
 
 # The app-build gate runs only where an example app exists: the public tree has none yet.
 DEMO_GATE := $(if $(wildcard Scripts/check-demo-builds.sh),demo,)
 
-check: build test lint scan graph privacy declarations strings symbols scripts pins $(DEMO_GATE)
+check: version build test lint scan graph privacy declarations strings symbols scripts pins $(DEMO_GATE)
 	@mkdir -p .build && git rev-parse HEAD > .build/check-stamp && git diff --quiet HEAD -- . || echo dirty >> .build/check-stamp
 	@echo "✔ make check: all credential-free gates passed (stamped for pre-push)"
 
-check-clt: build test lint scan graph privacy declarations strings symbols scripts
+check-clt: version build test lint scan graph privacy declarations strings symbols scripts
 	@echo "✔ make check-clt: all gates except competing pins and the app build passed"
 
 precommit: lint scan-staged
@@ -78,6 +78,14 @@ scripts:
 
 pins:
 	sh Scripts/check-competing-pins.sh
+
+# Touchpoint.version is SemVer and CHANGELOG.md has a section for it (a release tag must equal it).
+version:
+	sh Scripts/check-version.sh
+
+# Public API compared with the last release tag; breaks must match the version bump. Run by CI.
+api:
+	sh Scripts/check-api-breaks.sh
 
 
 hooks:

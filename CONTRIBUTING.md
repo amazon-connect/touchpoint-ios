@@ -36,9 +36,10 @@ To send us a pull request:
    and secret-scans the staged files. The pre-push hook runs `make check`.
 3. Add tests for your change. Every change ships with its tests, and `make check` must pass.
 4. Commit with clear messages following [Conventional Commits](https://www.conventionalcommits.org/).
-5. Send us a pull request and answer any default questions in the pull request interface.
-6. Stay involved in the conversation. The repository has no CI yet, so a maintainer runs
-   `make check` and `make build-ios` on your change before merging it.
+5. Send us a pull request against `main` from a branch (not from your fork's `main`) and answer
+   any default questions in the pull request interface.
+6. Stay involved in the conversation. CI runs `make check`, `make build-ios`, the version check
+   and the API-compatibility check on every pull request, and they must pass before a merge.
 
 GitHub provides additional documentation on
 [forking a repository](https://help.github.com/articles/fork-a-repo/) and
@@ -57,15 +58,34 @@ GitHub provides additional documentation on
   a `@ScaledMetric`. `Scripts/lint.sh` checks this too.
 - **User-facing strings go through the String Catalog**, and new UI is accessible: labelled
   controls, Dynamic Type, VoiceOver.
-- **Public API changes are expensive to reverse.** Call them out explicitly in the pull request.
+- **Public API changes are expensive to reverse.** Call them out explicitly in the pull request
+  and in `CHANGELOG.md`. `Scripts/check-api-breaks.sh` compares the public API with the last
+  release and fails on a break the version number doesn't allow.
 - **Dependencies stay small.** A chat-only app must not link the media stack;
   `Scripts/check-build-graph.sh` checks the product graph. Propose any new dependency in an issue
   first.
 
-## Releases
+## Releasing
 
-Maintainers tag a release only from a commit on which `make check` and `make build-ios` pass on
-their machine. Release tags can't be moved or deleted, and only maintainers can create them.
+Releases are git tags, which Swift Package Manager resolves. A tag is SemVer with no `v` prefix
+(`0.2.0`, `1.0.0-rc.1`) and equals `Touchpoint.version` in `Sources/TouchpointCore/Touchpoint.swift`.
+Before 1.0.0 a minor release may change the public API; a patch release never does. From 1.0.0,
+only a major release may.
+
+To release:
+
+1. Open a release pull request into `main` that sets `Touchpoint.version`, moves the
+   `[Unreleased]` entries in `CHANGELOG.md` into a section headed `## [X.Y.Z] - YYYY-MM-DD`, and
+   raises any dependency floor in `Package.swift` that the release needs. CI must pass and a
+   maintainer must approve it.
+2. Squash-merge it. `main` keeps a linear history, one commit per pull request.
+3. Tag that commit on `main` and push the tag: `git tag -a X.Y.Z -m X.Y.Z && git push origin
+   X.Y.Z`. The release workflow checks that the tag is on `main`, equals `Touchpoint.version` and
+   has a dated changelog section, runs `make check` and `make build-ios`, and publishes a GitHub
+   release with that section as its notes (a pre-release before 1.0.0).
+
+Only maintainers can create tags, and tags can't be moved or deleted once pushed. A bad release is
+fixed with a new patch release, never by moving its tag.
 
 ## Finding contributions to work on
 

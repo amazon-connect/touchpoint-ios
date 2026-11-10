@@ -124,4 +124,15 @@ expect_fail "no longer linked" "K4 a dropped framework fails" sh "$S/check-inher
 expect_exit 2 "K5 a missing captured file is an error" sh "$S/check-inherited-declarations.sh" --baseline "$F/inherited/baseline.json" --current "$F/inherited/no-such.json"
 expect_pass "K6 real: resolved frameworks match the checked-in baseline" sh "$S/check-inherited-declarations.sh"
 
+echo "check-version.sh"
+V="$F/version"
+expect_pass "L1 real: Touchpoint.version is SemVer and CHANGELOG.md has its section" sh "$S/check-version.sh"
+expect_pass "L2 a tag equal to the version, with a dated section, passes" sh "$S/check-version.sh" --source "$V/version-0.2.0.swift" --changelog "$V/changelog-dated.md" --tag 0.2.0
+expect_fail "does not equal Touchpoint.version" "L3 a tag that differs from the version fails" sh "$S/check-version.sh" --source "$V/version-0.2.0.swift" --changelog "$V/changelog-dated.md" --tag 0.2.1
+expect_fail "is not dated" "L4 releasing an undated section fails" sh "$S/check-version.sh" --source "$V/version-0.2.0.swift" --changelog "$V/changelog-undated.md" --tag 0.2.0
+expect_fail "has no '## \\[0.2.0\\]' section" "L5 a version with no changelog section fails" sh "$S/check-version.sh" --source "$V/version-0.2.0.swift" --changelog "$V/changelog-missing.md"
+expect_fail "is not SemVer" "L6 a non-SemVer version fails" sh "$S/check-version.sh" --source "$V/version-not-semver.swift" --changelog "$V/changelog-dated.md"
+notes=$(sh "$S/check-version.sh" --changelog "$V/changelog-dated.md" --notes 0.2.0 2>&1)
+if [ "$(printf '%s\n' "$notes" | head -1)" = "### Fixed" ] && ! printf '%s' "$notes" | grep -q "0.1.0"; then pass "L7 --notes prints exactly that release's section"; else flunk "L7 --notes printed: $(printf '%s' "$notes" | tr '\n' '|')"; fi
+
 [ "$fail" = 0 ] && echo "all script checks passed" || { echo "script checks FAILED"; exit 1; }
