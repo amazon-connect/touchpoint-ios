@@ -273,9 +273,9 @@ enum ChatOptions {
     /// as "<date>, <time>". The device locale, as web uses the browser's.
     static func timestamp(_ date: Date, now: Date = Date(), calendar: Calendar = .current,
                           locale: Locale = .current) -> String {
-        let time = date.formatted(Date.FormatStyle(locale: locale, calendar: calendar).hour().minute())
+        let time = date.formatted(Date.FormatStyle(locale: locale, calendar: calendar, timeZone: calendar.timeZone).hour().minute())
         if calendar.isDate(date, inSameDayAs: now) { return time }
-        var day = Date.FormatStyle(locale: locale, calendar: calendar).month(.abbreviated).day()
+        var day = Date.FormatStyle(locale: locale, calendar: calendar, timeZone: calendar.timeZone).month(.abbreviated).day()
         if calendar.component(.year, from: date) != calendar.component(.year, from: now) { day = day.year() }
         return "\(date.formatted(day)), \(time)"
     }

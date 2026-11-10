@@ -43,7 +43,11 @@ jobs:
           key: spm-${{ hashFiles('Package.swift') }}-${{ steps.toolchain.outputs.week }}
           restore-keys: spm-
 
+      # SwiftPM's older native build system copies the String Catalog instead of compiling it, and
+      # the localisation tests then find no strings. Swift Build compiles it (the default from 6.4).
       - name: make check
+        env:
+          SWIFTPM_FLAGS: --build-system swiftbuild
         run: make check
 
       # Report only: lists this pull request's public API changes for the reviewer. Whether a
@@ -77,23 +81,10 @@ jobs:
           key: spm-${{ hashFiles('Package.swift') }}-${{ steps.toolchain.outputs.week }}
 
   build-ios:
-    # The real link against the Connect chat SDK, the AWS SDK for Swift and Chime, on the newest
-    # Xcode and on the oldest one the README supports.
-    # Stable names: branch protection and the release workflow require them. The version is in the
-    # Toolchain step's log.
-    name: make build-ios (${{ matrix.label }})
-    runs-on: ${{ matrix.runner }}
+    # The real link against the Connect chat SDK, the AWS SDK for Swift and Chime.
+    name: make build-ios
+    runs-on: macos-26
     timeout-minutes: 90
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - label: newest Xcode
-            runner: macos-26
-            xcode: "26.6"
-          - label: Xcode 16
-            runner: macos-15
-            xcode: "16.4"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -102,11 +93,11 @@ jobs:
       - name: Toolchain
         id: toolchain
         run: |
-          sudo xcode-select -s "/Applications/Xcode_${{ matrix.xcode }}.app"
+          sudo xcode-select -s /Applications/Xcode_26.6.app
           xcodebuild -version
           echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
 
-      # Read only: the check job saves the one shared cache (git mirrors, the same for every Xcode).
+      # Read only: the check job saves the one shared cache.
       - name: Restore the Swift package cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:

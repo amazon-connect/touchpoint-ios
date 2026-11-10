@@ -18,7 +18,7 @@ upstream dependency pulling Chime in would fail the gate too.
 
 ## Requirements
 
-iOS 17.0+, Swift 6 language mode, Swift Package Manager. Xcode 16 or newer to build the iOS
+iOS 17.0+, Swift 6 language mode, Swift Package Manager. Xcode 26 or newer to build the iOS
 products; the unit tier also runs on macOS 14+ with `swift test`.
 
 ## Installation
@@ -571,7 +571,7 @@ enforces:
 | `Scripts/check-competing-pins.sh` | An integrator's own pin of the Connect, AWS or Chime SDK either resolves at or above the floor or fails naming the package and both versions |
 | `Scripts/check-version.sh` | `Touchpoint.version` is SemVer and `CHANGELOG.md` has a section for it; a release tag must equal it |
 
-GitHub Actions runs `make check`, `make build-ios` (on the newest Xcode and on Xcode 16) and
+GitHub Actions runs `make check`, `make build-ios` and
 CodeQL on every pull request, and lists its public API changes. A release tag is checked against
 `Touchpoint.version`, `CHANGELOG.md` and the previous release's public API
 (`Scripts/check-api-breaks.sh`). How to contribute,

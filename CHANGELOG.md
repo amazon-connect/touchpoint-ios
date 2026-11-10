@@ -25,6 +25,6 @@ First public release.
 
 ### Requirements
 
-- iOS 17.0 or later, Swift 6 language mode, Xcode 16 or later.
+- iOS 17.0 or later, Swift 6 language mode, Xcode 26 or later.
 - `amazon-connect-chat-ios` 3.0.0 or later; Amazon Chime SDK for iOS (no-video-codecs) 0.27.4 or
   later.

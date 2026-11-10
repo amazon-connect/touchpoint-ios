@@ -18,8 +18,7 @@ concurrency:
 jobs:
   analyze:
     name: CodeQL (swift)
-    # Xcode 16.4: a Swift compiler CodeQL's extractor is known to support.
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 120
     permissions:
       contents: read
@@ -31,7 +30,7 @@ jobs:
 
       - name: Toolchain
         run: |
-          sudo xcode-select -s /Applications/Xcode_16.4.app
+          sudo xcode-select -s /Applications/Xcode_26.6.app
           xcodebuild -version
 
       - uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3

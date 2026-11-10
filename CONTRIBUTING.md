@@ -39,11 +39,10 @@ To send us a pull request:
 4. Commit with clear messages following [Conventional Commits](https://www.conventionalcommits.org/).
 5. Send us a pull request against `main` from a branch (not from your fork's `main`) and answer
    any default questions in the pull request interface.
-6. Stay involved in the conversation. CI runs `make check` and `make build-ios` (on the newest
-   Xcode and on Xcode 16), and CodeQL, on every pull request; they must pass before a merge. Their
-   job names are required checks on `main`, so rename them only together with branch protection
-   and `release.yml`. CI also
-   lists the pull request's public API changes for the reviewer.
+6. Stay involved in the conversation. CI runs `make check`, `make build-ios` and CodeQL on every
+   pull request; they must pass before a merge. Their job names are required checks on `main`, so
+   rename a job only together with branch protection. CI also lists the pull request's public API
+   changes for the reviewer.
 
 GitHub provides additional documentation on
 [forking a repository](https://help.github.com/articles/fork-a-repo/) and
