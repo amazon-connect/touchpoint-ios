@@ -98,8 +98,13 @@ To release:
    the Release workflow once it has.
 
 Swift Package Manager resolves a tag as soon as it's pushed, so tag only a green commit. Only
-repository admins can create tags, and nobody can move or delete one. A bad release is fixed with a
-new patch release, never by moving its tag.
+maintainers and admins can create tags, nobody can move or delete one, and a published release
+can't be changed. A bad release is fixed with a new patch release, never by moving its tag.
+
+`main` is protected: every change arrives through a pull request, with `make check`,
+`make build-ios` and `CodeQL (swift)` passing on a branch that is up to date with `main`, and every
+review conversation resolved. The rules apply to admins too, and `main` can't be force-pushed or
+deleted.
 
 ## Finding contributions to work on
 
