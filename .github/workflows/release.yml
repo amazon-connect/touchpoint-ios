@@ -25,6 +25,7 @@ jobs:
     permissions:
       contents: read
       checks: read
+      actions: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -39,17 +40,24 @@ jobs:
       - name: The tag equals Touchpoint.version and CHANGELOG.md dates it
         run: sh Scripts/check-version.sh --tag "$GITHUB_REF_NAME"
 
+      # Only GitHub Actions' own runs of ci.yml for a push to main count, not a check run any app
+      # could post under the same name.
       - name: main's CI passed on this commit
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/check-runs?per_page=100" \
-            --jq '.check_runs[] | "\(.name)\t\(.conclusion)"' > checks.tsv
-          cat checks.tsv
-          for name in "make check" "make build-ios (Xcode 26.6)" "make build-ios (Xcode 16.4)"; do
-            grep -qx "$name	success" checks.tsv \
-              || { echo "release: CI check '$name' has not passed on $GITHUB_SHA; tag a green commit"; exit 1; }
-          done
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$GITHUB_SHA&event=push&branch=main&status=success" \
+            --jq '.total_count' > green-runs.txt
+          [ "$(cat green-runs.txt)" -ge 1 ] \
+            || { echo "release: main's CI (ci.yml) has not passed on $GITHUB_SHA; tag a green commit, or re-run this workflow once it has"; exit 1; }
+          echo "main's CI passed on $GITHUB_SHA"
+
+      - name: Restore the Swift package cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ hashFiles('Package.swift') }}
+          restore-keys: spm-
 
       - name: Public API breaks fit the version
         run: |
@@ -62,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
-      contents: write # create the release; this job runs no package code
+      contents: write # create the release; this job builds no package code
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

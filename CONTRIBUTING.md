@@ -40,7 +40,9 @@ To send us a pull request:
 5. Send us a pull request against `main` from a branch (not from your fork's `main`) and answer
    any default questions in the pull request interface.
 6. Stay involved in the conversation. CI runs `make check` and `make build-ios` (on the newest
-   Xcode and on Xcode 16), and CodeQL, on every pull request; they must pass before a merge. CI also
+   Xcode and on Xcode 16), and CodeQL, on every pull request; they must pass before a merge. Their
+   job names are required checks on `main`, so rename them only together with branch protection
+   and `release.yml`. CI also
    lists the pull request's public API changes for the reviewer.
 
 GitHub provides additional documentation on
@@ -78,8 +80,9 @@ To release:
 
 1. Open a release pull request into `main` that sets `Touchpoint.version`, renames
    `## [Unreleased]` in `CHANGELOG.md` to `## [X.Y.Z] - YYYY-MM-DD`, and
-   raises any dependency floor in `Package.swift` that the release needs. CI must pass and a
-   maintainer must approve it.
+   raises any dependency floor in `Package.swift` that the release needs. CI must pass. Because
+   the pull request changes the version, CI also runs the checks the tag will face: the version
+   matches a dated changelog section, and any public API break since the last release fits it.
 2. Squash-merge it. `main` keeps a linear history, one commit per pull request.
 3. Wait for `main`'s CI run on that commit to pass, then tag it and push the tag:
 
@@ -92,7 +95,8 @@ To release:
    The release workflow checks that the tag is on `main`, equals `Touchpoint.version`, has a dated
    changelog section and that `main`'s CI passed on it, and that any public API break since the
    previous release fits the version. It then publishes a GitHub release with that section as its
-   notes (a pre-release before 1.0.0).
+   notes (a pre-release before 1.0.0). If the tag was pushed before `main`'s CI finished, re-run
+   the Release workflow once it has.
 
 Swift Package Manager resolves a tag as soon as it's pushed, so tag only a green commit. Only
 repository admins can create tags, and nobody can move or delete one. A bad release is fixed with a
