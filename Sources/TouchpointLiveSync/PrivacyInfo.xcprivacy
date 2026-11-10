@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Every target embeds its own manifest. Keep accurate as code lands; required-reason
+	     API usage (UserDefaults, file timestamps, disk space, system boot time, active keyboards)
+	     must be declared here when first used. -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<!-- Live Sync posts the host app's declared context — which screen the customer is on and what
+	     the app can do there — to the Amazon Connect Live Sync backend, only after the customer has
+	     granted consent in-app (App Store 5.1.2(i)). It is product-interaction data, used for
+	     app functionality, not linked to the user by this SDK and not used for tracking. The host
+	     app's App Privacy answers must reflect this; the consent sheet is the in-app disclosure. -->
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeProductInteraction</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
+</dict>
+</plist>

@@ -1,0 +1,29 @@
+{
+  "AWSCore": {
+    "accessedAPI": {
+      "NSPrivacyAccessedAPICategoryFileTimestamp": ["C617.1"]
+    },
+    "collectedData": [],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "AmazonConnectChatIOS": {
+    "accessedAPI": {},
+    "collectedData": [
+      {
+        "linked": false,
+        "purposes": ["app_functionality"],
+        "tracking": false,
+        "type": "attachments"
+      }
+    ],
+    "tracking": false,
+    "trackingDomains": []
+  },
+  "SomeNewDependency": {
+    "accessedAPI": {},
+    "collectedData": [],
+    "tracking": true,
+    "trackingDomains": ["tracker.example.com"]
+  }
+}

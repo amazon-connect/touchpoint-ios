@@ -1,0 +1,3 @@
+# git-secrets' allowlist (one regex per line, against `file:line:text`). Only the scan's must-fail fixture,
+# which holds a placeholder account id so Scripts/scan-secrets.sh can prove it catches one.
+Tests/Fixtures/scan/must-fail\.txt:

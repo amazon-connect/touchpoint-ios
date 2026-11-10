@@ -1,0 +1,21 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "touchpoint.fixture.ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "touchpoint.fixture.missing_en" : {
+      "extractionState" : "manual",
+      "localizations" : {}
+    }
+  },
+  "version" : "1.0"
+}

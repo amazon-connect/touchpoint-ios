@@ -1,0 +1,9 @@
+# Fixture: every line below must be flagged by Scripts/scan-secrets.sh (all values are fake).
+aws-access-key: AKIAIOSFODNN7EXAMPLE
+account-id: arn:aws:iam::123456789012:role/Admin
+nlx-api-key: nlx_example_key_value_0123456789
+credentials-file: aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+json-account: "accountId": "123456789012"
+prose-account: the AWS account 123456789012 hosts it
+query-account: https://example.test/console?account=123456789012
+session-token: aws_session_token = IQoJb3JpZ2luX2VjEXAMPLEexampleEXAMPLEexample

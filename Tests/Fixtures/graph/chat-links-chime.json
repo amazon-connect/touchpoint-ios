@@ -1,0 +1,13 @@
+{ "_comment": "Direct violation: TouchpointChat lists AmazonChimeSDK itself.",
+  "packages": {
+    "root": {
+      "products": {"TouchpointCore":["TouchpointCore"],"TouchpointChat":["TouchpointChat"],"TouchpointVoice":["TouchpointVoice"],"TouchpointLiveSync":["TouchpointLiveSync"]},
+      "targets": {
+        "TouchpointCore":     {"targets":[], "products":[]},
+        "TouchpointChat":     {"targets":["TouchpointCore"], "products":["AmazonConnectChatIOS","AmazonChimeSDK"]},
+        "TouchpointVoice":    {"targets":["TouchpointCore"], "products":["AmazonChimeSDK"]},
+        "TouchpointLiveSync": {"targets":["TouchpointCore"], "products":[]} } },
+    "amazon-connect-chat-ios": { "products": {"AmazonConnectChatIOS":["AmazonConnectChatIOS"]}, "targets": {"AmazonConnectChatIOS": {"targets":[], "products":["AWSCore"]}} },
+    "chime": { "products": {"AmazonChimeSDK":["AmazonChimeSDK","AmazonChimeSDKMedia"]}, "targets": {"AmazonChimeSDK":{"targets":[],"products":[]},"AmazonChimeSDKMedia":{"targets":[],"products":[]}} },
+    "aws-sdk-ios-spm": { "products": {"AWSCore":["AWSCore"]}, "targets": {"AWSCore":{"targets":[],"products":[]}} }
+  } }
