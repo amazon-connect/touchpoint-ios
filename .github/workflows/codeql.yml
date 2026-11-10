@@ -21,6 +21,7 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 120
     permissions:
+      actions: read # the upload reads this run's details, which a private repository restricts
       contents: read
       security-events: write # upload the results to code scanning
     steps:
