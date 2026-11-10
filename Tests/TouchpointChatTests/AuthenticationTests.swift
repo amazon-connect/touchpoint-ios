@@ -141,8 +141,12 @@ struct AuthenticationTransportTests {
         await prompt(d)
         _ = await waitUntil { await events.statuses == [.prompt] }
         _ = try await t.beginAuthentication()
+        // beginAuthentication's in-progress status reaches the test through the event pump.
+        #expect(await waitUntil { await events.statuses == [.prompt, .inProgress] })
         try await t.completeAuthentication(callbackURL: URL(string: "acmebank-touchpoint://auth?code=abc&state=st-1")!)
         #expect(await relay.completions == [AuthenticationCompletion(code: "abc", state: "st-1")])
+        // Give the pump time to deliver anything completeAuthentication emitted: nothing should come.
+        try await Task.sleep(for: .milliseconds(100))
         #expect(await events.statuses == [.prompt, .inProgress], "success is Connect's to say")
         await d.fire { $0.onAuthenticationEvent(event("succeeded"), nil, nil) }
         #expect(await waitUntil { await events.statuses == [.prompt, .inProgress, .success] })
