@@ -1,0 +1,88 @@
+name: Release
+
+# A release is a SemVer tag on a commit of main. The verify job checks the tag, that main's CI
+# passed on that exact commit, and that any public API break fits the version; the publish job then
+# creates the GitHub release, with the tag's CHANGELOG.md section as its notes. Swift Package
+# Manager resolves the tag itself, so tag only a commit whose main CI run is green.
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify the tag
+    runs-on: macos-26
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      checks: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # branches and tags: origin/main and the previous release
+          persist-credentials: false
+
+      - name: The tag is on main
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main \
+            || { echo "release: $GITHUB_REF_NAME is not on main; tag a commit of origin/main"; exit 1; }
+
+      - name: The tag equals Touchpoint.version and CHANGELOG.md dates it
+        run: sh Scripts/check-version.sh --tag "$GITHUB_REF_NAME"
+
+      # Only GitHub Actions' own runs of ci.yml for a push to main count, not a check run any app
+      # could post under the same name.
+      - name: main's CI passed on this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$GITHUB_SHA&event=push&branch=main&status=success" \
+            --jq '.total_count' > green-runs.txt
+          [ "$(cat green-runs.txt)" -ge 1 ] \
+            || { echo "release: main's CI (ci.yml) has not passed on $GITHUB_SHA; tag a green commit, or re-run this workflow once it has"; exit 1; }
+          echo "main's CI passed on $GITHUB_SHA"
+
+      - name: Restore the Swift package cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ hashFiles('Package.swift') }}
+          restore-keys: spm-
+
+      - name: Public API breaks fit the version
+        run: |
+          previous=$(git describe --tags --abbrev=0 --match '[0-9]*.[0-9]*.[0-9]*' "$GITHUB_SHA^" 2>/dev/null || true)
+          if [ -n "$previous" ]; then sh Scripts/check-api-breaks.sh "$previous"; else echo "first release: nothing to compare"; fi
+
+  publish:
+    name: Publish the GitHub release
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # create the release; this job builds no package code
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          sh Scripts/check-version.sh --notes "$TAG" > release-notes.md
+          prerelease=""
+          case "$TAG" in 0.*|*-*) prerelease="--prerelease" ;; esac
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" \
+            --notes-file release-notes.md $prerelease

@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # A newer push supersedes a pull request's run. Each commit on main gets its own group, so every
+  # one finishes: a release tags only a commit whose main run is green.
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    name: make check
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # the API listing compares with the pull request's base
+          persist-credentials: false
+
+      - name: Toolchain
+        id: toolchain
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.6.app
+          xcodebuild -version
+          swift --version
+          python3 --version
+          echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # SwiftPM's shared repository cache (the AWS SDK for Swift alone is about 3 GB). Refreshed
+      # weekly, and saved only from main so pull requests don't evict each other.
+      - name: Restore the Swift package cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ hashFiles('Package.swift') }}-${{ steps.toolchain.outputs.week }}
+          restore-keys: spm-
+
+      - name: make check
+        run: make check
+
+      # Report only: lists this pull request's public API changes for the reviewer. Whether a
+      # break fits the version is enforced when a release is tagged.
+      - name: Public API changes in this pull request
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: sh Scripts/check-api-breaks.sh --report-only "origin/$BASE_REF"
+
+      # A pull request that changes Touchpoint.version is a release pull request: check now what
+      # the release workflow will check once the tag is public, when it can no longer be undone.
+      - name: Release readiness
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          read_version() { sed -n 's/^ *public static let version = "\([^"]*\)".*/\1/p' | head -1; }
+          version=$(read_version < Sources/TouchpointCore/Touchpoint.swift)
+          base=$(git show "origin/$BASE_REF:Sources/TouchpointCore/Touchpoint.swift" | read_version)
+          if [ "$version" = "$base" ]; then echo "not a release pull request ($version)"; exit 0; fi
+          echo "release pull request: $base -> $version"
+          sh Scripts/check-version.sh --tag "$version"
+          sh Scripts/check-api-breaks.sh
+
+      - name: Save the Swift package cache
+        if: github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ hashFiles('Package.swift') }}-${{ steps.toolchain.outputs.week }}
+
+  build-ios:
+    # The real link against the Connect chat SDK, the AWS SDK for Swift and Chime.
+    name: make build-ios
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Toolchain
+        id: toolchain
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.6.app
+          xcodebuild -version
+          echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # Read only: the check job saves the one shared cache.
+      - name: Restore the Swift package cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ hashFiles('Package.swift') }}-${{ steps.toolchain.outputs.week }}
+          restore-keys: spm-
+
+      - name: make build-ios
+        run: make build-ios

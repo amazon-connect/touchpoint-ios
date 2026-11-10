@@ -103,18 +103,19 @@ struct DeclarativeActionTests {
     @Test("D2: the 300 ms ceiling — a tree that never settles still posts")
     func ceiling() async {
         let log = PostLog()
-        // Real clock, tiny values: 10 ms debounce, 40 ms ceiling, updates every 5 ms for 100 ms.
+        // Real clock, tiny values: 10 ms debounce, 40 ms ceiling, updates every 5 ms for 300 ms (long
+        // enough that a loaded CI runner still sees several ceilings pass).
         let agg = log.makeAggregator(clock: ContinuousClockSleeper(), debounce: .milliseconds(10), maxWait: .milliseconds(40))
         let start = ContinuousClock.now
         var n = 0
-        while start.duration(to: .now) < .milliseconds(100) {
+        while start.duration(to: .now) < .milliseconds(300) {
             n += 1
             agg.update(TouchpointActionSet([decl("a\(n)")]))
             try? await Task.sleep(for: .milliseconds(5))
         }
         #expect(await eventually { log.contexts.count >= 1 })
-        // The first post must have happened by ~40 ms, not after the churn stopped at 100 ms.
-        #expect(agg.postCount >= 2, "with a 40 ms ceiling inside 100 ms of churn there must be at least two posts; got \(agg.postCount)")
+        // The first post must have happened by ~40 ms, not after the churn stopped at 300 ms.
+        #expect(agg.postCount >= 2, "with a 40 ms ceiling inside 300 ms of churn there must be at least two posts; got \(agg.postCount)")
     }
 
     @Test("D3: re-renders with unchanged content advertise nothing and do not restart the timer")

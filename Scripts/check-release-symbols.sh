@@ -9,8 +9,9 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 OBJ=""
 [ "${1:-}" = "--object" ] && OBJ=$2
 if [ -z "$OBJ" ]; then
-    (cd "$ROOT" && swift build -c release --target TouchpointCore >/dev/null 2>&1) \
-    || (cd "$ROOT" && swift build --disable-sandbox -c release --target TouchpointCore >/dev/null 2>&1) \
+    # shellcheck disable=SC2086 # SWIFTPM_FLAGS is a word list on purpose
+    (cd "$ROOT" && swift build ${SWIFTPM_FLAGS:-} -c release --target TouchpointCore >/dev/null 2>&1) \
+    || (cd "$ROOT" && swift build ${SWIFTPM_FLAGS:-} --disable-sandbox -c release --target TouchpointCore >/dev/null 2>&1) \
     || { echo "check-release-symbols: release build failed"; exit 2; }
     OBJ="$ROOT/.build/release/TouchpointCore.o"
     # swift-build backend capitalises the directory (out/Products/Release); legacy layout does not.

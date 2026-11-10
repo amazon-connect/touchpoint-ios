@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # The pinned actions in .github/workflows. Swift package floors in Package.swift are raised by
+  # hand, only when the SDK needs something newer.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
