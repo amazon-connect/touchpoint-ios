@@ -13,10 +13,13 @@
 #   make hooks        install the pre-commit (precommit) and pre-push (check) hooks
 #
 # From a shell inside another sandbox (some agent runtimes), SwiftPM's own sandbox cannot nest;
-# set SWIFTPM_FLAGS=--disable-sandbox. Never make that the default.
+# set SWIFTPM_FLAGS="--build-system swiftbuild --disable-sandbox". Never make that the default.
 
 SWIFT        ?= swift
-SWIFTPM_FLAGS ?=
+# Swift Build, the default from Swift 6.4: SwiftPM's older native build system copies the String
+# Catalog instead of compiling it, and the localisation tests then find no strings.
+SWIFTPM_FLAGS ?= --build-system swiftbuild
+export SWIFTPM_FLAGS
 XCODEBUILD   ?= xcodebuild
 SCHEME       ?= Touchpoint-Package
 

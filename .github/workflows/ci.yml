@@ -29,6 +29,7 @@ jobs:
       - name: Toolchain
         id: toolchain
         run: |
+          sudo xcode-select -s /Applications/Xcode_26.6.app
           xcodebuild -version
           swift --version
           python3 --version
@@ -43,11 +44,7 @@ jobs:
           key: spm-${{ hashFiles('Package.swift') }}-${{ steps.toolchain.outputs.week }}
           restore-keys: spm-
 
-      # SwiftPM's older native build system copies the String Catalog instead of compiling it, and
-      # the localisation tests then find no strings. Swift Build compiles it (the default from 6.4).
       - name: make check
-        env:
-          SWIFTPM_FLAGS: --build-system swiftbuild
         run: make check
 
       # Report only: lists this pull request's public API changes for the reviewer. Whether a
