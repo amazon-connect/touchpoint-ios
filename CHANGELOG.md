@@ -7,7 +7,7 @@ public API; a patch release never does. Each release is a git tag equal to `Touc
 Changes since the last release go under a `## [Unreleased]` heading at the top. How to release is
 in [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-11-10
 
 First public release.
 
