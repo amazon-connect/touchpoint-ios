@@ -1,0 +1,65 @@
+name: Bug report
+description: Something in the SDK doesn't work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Don't report security issues here. Use the [AWS vulnerability reporting page](https://aws.amazon.com/security/vulnerability-reporting/) instead.
+
+        Don't paste credentials, participant tokens, Live Sync keys, meeting or attendee data, sign-in codes, contact IDs or customer data. Redact them from logs and screenshots.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The smallest set of steps or code that shows the problem.
+      placeholder: |
+        1. Start a chat with …
+        2. …
+    validations:
+      required: true
+  - type: dropdown
+    id: products
+    attributes:
+      label: Products
+      description: The SDK products involved.
+      multiple: true
+      options:
+        - TouchpointCore
+        - TouchpointChat
+        - TouchpointVoice
+        - TouchpointLiveSync
+    validations:
+      required: true
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Xcode, Swift, iOS and device
+      placeholder: "Xcode 26.1, Swift 6.2, iOS 26.0, iPhone 16 (or Simulator)"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Redact everything listed at the top of this form.
+      render: text
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else
+      description: Screenshots (redacted), relevant changes you've made, other packages that pin the AWS, Connect or Chime SDKs, or anything unusual about your setup.
