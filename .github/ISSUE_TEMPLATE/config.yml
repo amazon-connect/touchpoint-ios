@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security issue
+    url: https://aws.amazon.com/security/vulnerability-reporting/
+    about: Please don't report security issues in public GitHub issues.
+  - name: Amazon Connect service or account problems
+    url: https://aws.amazon.com/premiumsupport/
+    about: For problems with your Amazon Connect instance, contact flows or account, contact AWS Support.
