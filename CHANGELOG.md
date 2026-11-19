@@ -15,6 +15,9 @@ in [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
   Offline it talks to a scripted agent; live, an AI agent drives its screens through Live Sync to help
   dispute a card charge, by chat or by an in-app call, with hand-off to a person and screen sharing.
   `make demo-project` generates its Xcode project, and `make check` builds it.
+- Demo backend (`Demo/backend`): an AWS CDK app that deploys what live mode needs into your account:
+  the dispute AI agent (Agentic CX Designer), chat and voice contact flows, hand-off routing, and an
+  IAM-authorized demo API with Cognito sign-in that also serves the Live Sync keys.
 
 ## [0.1.0] - 2026-11-10
 

@@ -1,0 +1,47 @@
+{
+  "name": "touchpoint-demo-backend",
+  "version": "0.1.0",
+  "description": "Backend for the Acme Bank demo of the Amazon Connect Customer Touchpoint SDKs: demo API, Cognito sign-in, contact flows, and the Agentic CX Designer dispute agent (AWS CDK, TypeScript)",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "doctor": "tsx scripts/doctor.ts",
+    "deploy:base": "tsx scripts/cdk.ts deploy TouchpointDemo --require-approval never",
+    "deploy": "tsx scripts/cdk.ts deploy --all --require-approval never --outputs-file outputs.json",
+    "create-user": "tsx scripts/create-user.ts",
+    "set-keys": "tsx scripts/set-keys.ts acxd",
+    "set-livesync-key": "tsx scripts/set-keys.ts livesync",
+    "verify": "tsx scripts/verify.ts",
+    "app-config": "tsx scripts/app-config.ts",
+    "agent-password": "tsx scripts/agent-password.ts",
+    "destroy": "tsx scripts/destroy.ts",
+    "synth": "tsx scripts/cdk.ts synth --quiet",
+    "diff": "tsx scripts/cdk.ts diff",
+    "build": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.230.0",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "@aws-crypto/sha256-js": "^5.2.0",
+    "@aws-sdk/client-cloudformation": "^3.940.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.1172.0",
+    "@aws-sdk/client-connect": "^3.940.0",
+    "@aws-sdk/client-secrets-manager": "^3.940.0",
+    "@aws-sdk/client-sts": "^3.1172.0",
+    "@aws-sdk/credential-providers": "^3.940.0",
+    "@smithy/signature-v4": "^5.3.0",
+    "@types/aws-lambda": "^8.10.159",
+    "@types/node": "^22.0.0",
+    "amazon-connect-acxd-sdk": "0.3.0",
+    "aws-cdk": "^2.1030.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}
