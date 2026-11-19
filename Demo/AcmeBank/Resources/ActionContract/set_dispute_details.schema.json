@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "set_dispute_details",
+  "description": "Fill fields on the already-open dispute form as the customer explains what happened, one at a time across several turns. Set only the fields the customer has actually spoken to and leave the rest unset — a turn that establishes only the reason sets reason alone. Values entered here are a draft the customer will review. This never submits the dispute: there is deliberately no action that does.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "reason": {
+      "type": "string",
+      "enum": ["not_recognized", "duplicate", "incorrect_amount", "cancelled_service", "not_received", "other"],
+      "description": "Why the customer is disputing the charge, mapped from their own words (e.g. 'I don't recognise it' -> not_recognized)."
+    },
+    "cardPossession": {
+      "type": "string",
+      "enum": ["have_card", "lost", "stolen"],
+      "description": "Whether the customer still physically holds the card, e.g. 'I still have my card' -> have_card."
+    },
+    "authorized": {
+      "type": "boolean",
+      "description": "Whether the customer authorised the charge. 'It was never authorised' -> false."
+    },
+    "additionalDetails": {
+      "type": "string",
+      "description": "Any free-text detail the customer volunteers that does not fit the structured fields. Never place card numbers, PINs, passwords or one-time codes here — this value is sent to a third-party AI system."
+    }
+  }
+}

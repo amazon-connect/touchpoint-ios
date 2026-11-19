@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "select_transaction",
+  "description": "Open the detail screen for one transaction in the currently shown (and usually filtered) list — the one the customer has confirmed is the charge in question, e.g. 'yes, that one — Riverside Auto'. This opens its detail view; it does not start a dispute. If the id is not known, leave it unset and the app selects the single highlighted match.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Opaque id of the transaction to open. When unset, the app opens the sole highlighted/filtered match if there is exactly one."
+    }
+  }
+}

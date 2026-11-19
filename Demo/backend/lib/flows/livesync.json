@@ -1,0 +1,185 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "enable-logging",
+  "Actions": [
+    {
+      "Identifier": "enable-logging",
+      "Type": "UpdateFlowLoggingBehavior",
+      "Parameters": {
+        "FlowLoggingBehavior": "Enabled"
+      },
+      "Transitions": {
+        "NextAction": "set-voice"
+      }
+    },
+    {
+      "Identifier": "set-voice",
+      "Type": "UpdateContactTextToSpeechVoice",
+      "Parameters": {
+        "TextToSpeechVoice": "{{VoiceName}}",
+        "TextToSpeechEngine": "{{VoiceEngine}}"
+      },
+      "Transitions": {
+        "NextAction": "acxd",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "acxd"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "acxd",
+      "Type": "ConnectParticipantWithAgenticCX",
+      "Parameters": {
+        "AgentConfiguration": {
+          "WorkspaceId": "{{AcxdWorkspaceId}}",
+          "ApplicationId": "{{AcxdApplicationId}}",
+          "Alias": "{{AcxdAlias}}",
+          "ContextVariables": {
+            "channel": "{{Channel}}",
+            "screen": "$.Attributes.screen",
+            "transactionId": "$.Attributes.transactionId"
+          }
+        },
+        "AudioFillerConfiguration": "{{AudioFillerJson}}",
+        "SpeechRecognitionConfiguration": {
+          "SpeechRecognitionEngine": "AMAZON_AGENTIC_VOICE"
+        }
+      },
+      "Transitions": {
+        "NextAction": "goodbye",
+        "Conditions": [
+          {
+            "NextAction": "escalated",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "Escalation"
+              ]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingCondition",
+            "NextAction": "goodbye"
+          },
+          {
+            "ErrorType": "InputTimeLimitExceeded",
+            "NextAction": "goodbye"
+          },
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "unavailable"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "escalated",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Connecting you with a member of our team."
+      },
+      "Transitions": {
+        "NextAction": "set-queue",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "set-queue"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "set-queue",
+      "Type": "UpdateContactTargetQueue",
+      "Parameters": {
+        "QueueId": "{{QueueArn}}"
+      },
+      "Transitions": {
+        "NextAction": "to-queue",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "unavailable"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "to-queue",
+      "Type": "TransferContactToQueue",
+      "Parameters": {},
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "ErrorType": "QueueAtCapacity",
+            "NextAction": "no-agents"
+          },
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "no-agents"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "no-agents",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Everyone on our team is busy right now. Please try again later."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "disconnect"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "unavailable",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Sorry, the assistant is not available right now. Please try again later."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "disconnect"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "goodbye",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Thanks for contacting {{BankName}}."
+      },
+      "Transitions": {
+        "NextAction": "disconnect",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "disconnect"
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "disconnect",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {}
+    }
+  ]
+}

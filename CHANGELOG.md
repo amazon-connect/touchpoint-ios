@@ -7,6 +7,18 @@ public API; a patch release never does. Each release is a git tag equal to `Touc
 Changes since the last release go under a `## [Unreleased]` heading at the top. How to release is
 in [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
 
+## [Unreleased]
+
+### Added
+
+- Acme Bank demo app (`Demo/AcmeBank`): a fictional bank that uses the SDK through its public API.
+  Offline it talks to a scripted agent; live, an AI agent drives its screens through Live Sync to help
+  dispute a card charge, by chat or by an in-app call, with hand-off to a person and screen sharing.
+  `make demo-project` generates its Xcode project, and `make check` builds it.
+- Demo backend (`Demo/backend`): an AWS CDK app that deploys what live mode needs into your account:
+  the dispute AI agent (Agentic CX Designer), chat and voice contact flows, hand-off routing, and an
+  IAM-authorized demo API with Cognito sign-in that also serves the Live Sync keys.
+
 ## [0.1.0] - 2026-11-10
 
 First public release.

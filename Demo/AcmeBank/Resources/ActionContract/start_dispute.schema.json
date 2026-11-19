@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "start_dispute",
+  "description": "Open the dispute form for the transaction currently shown in detail, pre-filled with that transaction's amount, date and merchant. Use this once the customer has confirmed they want to dispute the selected charge. This only reveals and pre-fills the form; it fills none of the customer-provided reason fields and it does not submit anything.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Opaque id of the transaction to dispute. When unset, the app disputes the transaction currently open in detail."
+    }
+  }
+}
