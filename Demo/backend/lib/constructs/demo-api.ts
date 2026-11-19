@@ -37,6 +37,9 @@ export interface DemoApiProps {
  * its own backend starts the contact. This shape exists so a sample can reach a real instance with no
  * app server of its own.
  */
+/** The demo API's routes, all POST and all AWS_IAM. */
+const ROUTES = ['/chat/start', '/voice/start', '/livesync/credentials'];
+
 export class DemoApi extends Construct {
   readonly api: apigw.HttpApi;
   readonly identityPool: cognito.CfnIdentityPool;
@@ -50,7 +53,7 @@ export class DemoApi extends Construct {
       description: 'Touchpoint demo API: starts chat and in-app voice contacts, vends Live Sync credentials',
       entry: join(__dirname, '../../lambda/demo-api/index.ts'),
       handler: 'handler',
-      runtime: lambda.Runtime.NODEJS_22_X,
+      runtime: lambda.Runtime.NODEJS_24_X,
       architecture: lambda.Architecture.ARM_64,
       memorySize: 256,
       timeout: Duration.seconds(10),
@@ -89,7 +92,7 @@ export class DemoApi extends Construct {
       description: 'Touchpoint demo API. Every route requires AWS_IAM (SigV4).',
       createDefaultStage: false,
     });
-    for (const path of ['/chat/start', '/voice/start', '/livesync/credentials']) {
+    for (const path of ROUTES) {
       this.api.addRoutes({ path, methods: [apigw.HttpMethod.POST], integration, authorizer });
     }
 
@@ -143,7 +146,8 @@ export class DemoApi extends Construct {
     appUserRole.addToPolicy(
       new iam.PolicyStatement({
         actions: ['execute-api:Invoke'],
-        resources: [stack.formatArn({ service: 'execute-api', resource: this.api.apiId, resourceName: '*/POST/*' })],
+        // The three routes on the one stage, and nothing else on the API.
+        resources: ROUTES.map((path) => stack.formatArn({ service: 'execute-api', resource: this.api.apiId, resourceName: `$default/POST${path}` })),
       }),
     );
     new cognito.CfnIdentityPoolRoleAttachment(this, 'IdentityPoolRoles', {

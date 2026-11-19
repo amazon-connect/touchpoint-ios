@@ -24,7 +24,7 @@ export class BaseStack extends Stack {
       userPoolName: `${PROJECT_PREFIX}-users`,
       selfSignUpEnabled: false,
       signInAliases: { username: true },
-      passwordPolicy: { minLength: 12, requireDigits: true, requireLowercase: true, requireUppercase: true, requireSymbols: false },
+      passwordPolicy: { minLength: 12, requireDigits: true, requireLowercase: true, requireUppercase: true, requireSymbols: true },
       accountRecovery: cognito.AccountRecovery.NONE,
       featurePlan: cognito.FeaturePlan.ESSENTIALS,
       removalPolicy: RemovalPolicy.DESTROY,

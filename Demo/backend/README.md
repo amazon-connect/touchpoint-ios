@@ -52,6 +52,11 @@ The demo API:
 trades the ID token for temporary credentials whose role can call this API and nothing else. The Lambda
 function's own role can start chat and in-app calls on your one instance and these two flows only.
 
+**Security checks.** Every `cdk synth` runs [cdk-nag](https://github.com/cdklabs/cdk-nag)'s AWS Solutions
+checks and fails on a new finding. The findings this demo accepts — no VPC, KMS customer managed keys,
+MFA or secret rotation, for example — are listed with their reasons in `lib/security.ts`, and are written
+into the templates so Checkov and cfn-guard report them as suppressed too.
+
 > A production app does not give AWS credentials to the device: it authenticates its own users, and its
 > own backend starts the contact. This shape lets a sample reach a real instance without an app server.
 

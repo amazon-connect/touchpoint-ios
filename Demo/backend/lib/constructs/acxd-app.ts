@@ -34,7 +34,7 @@ export class AcxdApp extends Construct {
       description: 'Custom resource: deploys the dispute AI agent with the Agentic CX Designer SDK',
       entry,
       handler: 'handler',
-      runtime: lambda.Runtime.NODEJS_22_X,
+      runtime: lambda.Runtime.NODEJS_24_X,
       architecture: lambda.Architecture.ARM_64,
       memorySize: 512,
       // Builds and deployments are polled until they finish.

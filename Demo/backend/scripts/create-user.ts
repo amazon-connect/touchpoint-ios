@@ -15,9 +15,9 @@ main(async () => {
   const username = process.argv[2] || (await prompt('Demo username [jordan]: ')) || 'jordan';
   if (!/^[A-Za-z0-9._-]{3,64}$/.test(username)) fail('Usernames are 3-64 letters, digits, . _ or -.');
 
-  const password = await prompt(`Password for ${username} (12+ characters, upper and lower case, a digit): `, true);
-  if (password.length < 12 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password)) {
-    fail('The password needs 12+ characters with upper and lower case letters and a digit.');
+  const password = await prompt(`Password for ${username} (12+ characters, upper and lower case, a digit, a symbol): `, true);
+  if (password.length < 12 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) || !/[^A-Za-z0-9]/.test(password)) {
+    fail('The password needs 12+ characters with upper and lower case letters, a digit and a symbol.');
   }
   if ((await prompt('Type it again: ', true)) !== password) fail('The passwords do not match.');
 

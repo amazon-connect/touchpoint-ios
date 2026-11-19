@@ -3,6 +3,7 @@ import { App, Tags } from 'aws-cdk-lib';
 import { AgentStack } from '../lib/agent-stack';
 import { BaseStack } from '../lib/base-stack';
 import { AGENT_STACK_NAME, BASE_STACK_NAME, TAGS } from '../lib/config';
+import { applySecurityChecks } from '../lib/security';
 
 const app = new App();
 
@@ -21,7 +22,7 @@ const base = new BaseStack(app, BASE_STACK_NAME, {
   description: 'Touchpoint SDK demo, step 1: the demo user pool and the Agentic CX Designer key secret',
 });
 
-new AgentStack(app, AGENT_STACK_NAME, {
+const agent = new AgentStack(app, AGENT_STACK_NAME, {
   env,
   description: 'Touchpoint SDK demo, step 3: the dispute AI agent, contact flows, and the demo API',
   instanceId,
@@ -31,3 +32,6 @@ new AgentStack(app, AGENT_STACK_NAME, {
 });
 
 for (const [key, value] of Object.entries(TAGS)) Tags.of(app).add(key, value);
+
+// cdk-nag (AWS Solutions) on every synth; lib/security.ts lists what the demo accepts and why.
+applySecurityChecks(app, base, agent);
