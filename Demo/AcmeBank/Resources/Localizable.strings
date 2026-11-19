@@ -1,0 +1,4 @@
+/* The local notification the demo posts when support replies and the chat is not on screen
+   (SupportCoordinator, from TouchpointSession.onIncomingMessages). Generic on purpose: a local
+   notification shows on the lock screen, and a bank's conversation stays inside the app. */
+"notification.chat.body" = "You have a new message from support.";

@@ -71,6 +71,7 @@ config.env
 ## Sample app and backend: local configuration, test credentials and build output
 live-connection.json
 /Demo/backend/config.json
+/Demo/AcmeBank/Resources/LiveConfig.plist
 node_modules/
 cdk.out/
 cdk.context.json

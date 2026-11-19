@@ -90,6 +90,12 @@ version:
 api:
 	sh Scripts/check-api-breaks.sh
 
+# The Acme Bank demo (Demo/AcmeBank): generate its Xcode project, or build it and its tests.
+demo-project:
+	sh Scripts/demo-project.sh
+
+demo:
+	sh Scripts/check-demo-builds.sh
 
 hooks:
 	sh Scripts/install-hooks.sh

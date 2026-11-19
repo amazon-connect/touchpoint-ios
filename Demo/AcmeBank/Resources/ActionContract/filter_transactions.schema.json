@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "filter_transactions",
+  "description": "Narrow the currently shown transaction list so the charge the customer is describing becomes easy to find and is highlighted. Fill the fields progressively as the customer gives them — naming only an amount filters by amount alone and leaves the date unset, and a later turn can add the date. An empty invocation clears the filter and shows the whole list again. This only changes what is shown; it selects nothing and disputes nothing.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "amount": {
+      "type": "number",
+      "description": "Approximate transaction amount in the account's currency, e.g. 240 for 'about two hundred and forty dollars'. Matching is fuzzy; an approximate value is expected."
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Transaction date as YYYY-MM-DD, resolved from a relative phrase like 'last Tuesday' against today's date."
+    },
+    "merchant": {
+      "type": "string",
+      "description": "Merchant name or fragment the customer recalls, e.g. 'Riverside'. Matching is case-insensitive and partial."
+    }
+  }
+}

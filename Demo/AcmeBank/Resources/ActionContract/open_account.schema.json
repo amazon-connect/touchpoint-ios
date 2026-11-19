@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "open_account",
+  "description": "Open one of the signed-in customer's accounts and show its list of transactions. Use this when the customer refers to a particular account or card they want to look at — most often the card carrying a charge they do not recognise. If they name the kind of account rather than an id, pass accountType and leave accountId unset; the app resolves it. Opening an account replaces whatever account was previously shown.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Opaque id of the account to open, if the customer or prior context identified a specific one."
+    },
+    "accountType": {
+      "type": "string",
+      "enum": ["credit_card", "checking", "savings"],
+      "description": "The kind of account to open when no specific id is known, e.g. the customer says 'my credit card'."
+    }
+  }
+}

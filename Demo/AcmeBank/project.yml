@@ -1,0 +1,170 @@
+# Acme Bank — the Touchpoint SDK demo application.
+#
+# `Scripts/demo-project.sh` generates AcmeBank.xcodeproj from this file; the project is gitignored.
+# The SDK is consumed by local path, exactly as an integrator would consume it by URL, so this is
+# also the first honest test of the public API. Nothing here is part of the published package.
+name: AcmeBank
+options:
+  # Overridable (Scripts/demo-project.sh): an App ID belongs to the first team that registers it, so
+  # a second developer's Personal Team needs a prefix of its own.
+  bundleIdPrefix: ${DEMO_BUNDLE_ID_PREFIX}
+  deploymentTarget:
+    iOS: "18.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    # Signed even on the simulator: the SDK's store keeps its key in the Keychain, and an unsigned
+    # process has no application identifier, so every Keychain call fails with errSecMissingEntitlement.
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY[sdk=iphonesimulator*]: "-"
+    # Device builds need a signing team; the simulator does not. Supplied by the environment so no
+    # checkout is pinned to one developer's team — `Scripts/demo-project.sh` defaults it to the
+    # team Xcode has registered locally, or set DEMO_DEVELOPMENT_TEAM yourself.
+    DEVELOPMENT_TEAM: ${DEMO_DEVELOPMENT_TEAM}
+    SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+    TARGETED_DEVICE_FAMILY: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: "YES"
+
+packages:
+  Touchpoint:
+    path: ../..
+
+targets:
+  AcmeBank:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources
+      # A partner's brand for a partner demo (see Sources/PartnerBrand.swift). Optional: absent in
+      # a checkout without one, and then the partner look draws Acme's brand.
+      - path: Partner
+        optional: true
+        excludes: ["*.md", "*.env"]
+    dependencies:
+      - package: Touchpoint
+        product: TouchpointCore
+      - package: Touchpoint
+        product: TouchpointChat
+      - package: Touchpoint
+        product: TouchpointLiveSync
+      - package: Touchpoint
+        product: TouchpointVoice
+    info:
+      path: Resources/Info.plist
+      properties:
+        CFBundleDisplayName: $(DEMO_APP_DISPLAY_NAME)
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: false
+        # `acmebank://support/livesync/<contactId>` binds Live Sync to a call placed from the
+        # dialler. Demo only — see DeepLinkContactIDResolver's caveat: an unauthenticated link is a
+        # bearer credential for the conversation.
+        CFBundleURLTypes:
+          - CFBundleURLName: com.acmebank.demo.livesync
+            CFBundleURLSchemes: [acmebank]
+        # `audio` keeps a call's audio alive when the app is backgrounded. `voip` is what entitles
+        # CallKit: `CXCallController.request` rejects a `CXStartCallAction` with
+        # `CXErrorCodeRequestTransactionError.unentitled` (code 1) unless `voip` is declared, for
+        # outbound calls as much as inbound. Earlier research (research/17-chime-ios-sdk.md §5.1)
+        # read `voip` as vestigial in the Chime and Connect samples because neither registers a
+        # `PKPushRegistry` — true for inbound, but it is not why the samples need it. No PushKit
+        # here either (design §4.4, outbound only), so no incoming-push obligation is triggered.
+        UIBackgroundModes: [audio, voip]
+        NSMicrophoneUsageDescription: $(DEMO_APP_DISPLAY_NAME) uses the microphone so you can talk to support from the app.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${DEMO_BUNDLE_ID_PREFIX}.app
+        # The home-screen name, a build setting so the tracked Info.plist never carries a partner's
+        # name: Acme Bank, or the partner folder's brand.env (Scripts/demo-project.sh).
+        DEMO_APP_DISPLAY_NAME: "${DEMO_APP_DISPLAY_NAME}"
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
+        # Debug builds carry the live-mode settings screen and the development backend.
+        # DEMO_PARTNER_CONDITION is `DEMO_PARTNER_BRAND` when Partner/ exists, else empty
+        # (Scripts/demo-project.sh).
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) DEBUG ${DEMO_PARTNER_CONDITION}"
+      configs:
+        Release:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) ${DEMO_PARTNER_CONDITION}"
+
+  AcmeBankTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: AcmeBank
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${DEMO_BUNDLE_ID_PREFIX}.tests
+        GENERATE_INFOPLIST_FILE: "YES"
+
+  AcmeBankUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: AcmeBank
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${DEMO_BUNDLE_ID_PREFIX}.uitests
+        GENERATE_INFOPLIST_FILE: "YES"
+        TEST_TARGET_NAME: AcmeBank
+
+schemes:
+  AcmeBank:
+    build:
+      targets:
+        AcmeBank: all
+        AcmeBankTests: [test]
+        AcmeBankUITests: [test]
+    run:
+      config: Debug
+      commandLineArguments:
+        "-uiTesting": false
+      # The Live Sync keys are typed on the app's sign-in screen and kept in the device keychain,
+      # so the run action carries none; the test action below passes only the directory the live
+      # UI tests read them from. A pair here would bypass the sign-in screen's fields.
+      environmentVariables:
+        ACME_LIVESYNC_CONTACT_ID: ${ACME_LIVESYNC_CONTACT_ID}
+        ACME_LIVE_REGION: ${ACME_LIVE_REGION}
+        # Live mode: with an endpoint and credentials present the demo launches in live mode, so
+        # chat, voice and Live Sync all come up configured with nothing typed. A simulator reads
+        # the credentials from the host path and leaves the three value variables empty; a device
+        # cannot read host paths, so there they carry the values. Empty everywhere = offline.
+        ACME_LIVE_ENDPOINT: ${ACME_LIVE_ENDPOINT}
+        ACME_CONNECT_INSTANCE_URL: ${ACME_CONNECT_INSTANCE_URL}
+        ACME_CALLBACK_NUMBER: ${ACME_CALLBACK_NUMBER}
+        ACME_LIVE_CREDS_FILE: ${ACME_LIVE_CREDS_FILE}
+        ACME_LIVE_PROFILE: ${ACME_LIVE_PROFILE}
+        ACME_LIVE_ACCESS_KEY_ID: ${ACME_LIVE_ACCESS_KEY_ID}
+        ACME_LIVE_SECRET_ACCESS_KEY: ${ACME_LIVE_SECRET_ACCESS_KEY}
+        ACME_LIVE_SESSION_TOKEN: ${ACME_LIVE_SESSION_TOKEN}
+        # Sign-in on the fly (the backend's identity pool): with these, the sign-in screen signs a
+        # demo user in and the app gets credentials for the backend only; the IAM variables above
+        # stay empty. Not secrets: a public client id and two pool ids.
+        ACME_COGNITO_USER_POOL_ID: ${ACME_COGNITO_USER_POOL_ID}
+        ACME_COGNITO_CLIENT_ID: ${ACME_COGNITO_CLIENT_ID}
+        ACME_COGNITO_IDENTITY_POOL_ID: ${ACME_COGNITO_IDENTITY_POOL_ID}
+    test:
+      config: Debug
+      targets:
+        - AcmeBankTests
+        - AcmeBankUITests
+      # Read only by the live-only UI tests (`testLive…`), which hand them to the app they launch;
+      # every other UI test launches offline with an empty environment. Empty = those tests skip.
+      environmentVariables:
+        ACME_LIVE_ENDPOINT: ${ACME_LIVE_ENDPOINT}
+        ACME_LIVE_REGION: ${ACME_LIVE_REGION}
+        ACME_LIVE_CREDS_FILE: ${ACME_LIVE_CREDS_FILE}
+        ACME_LIVE_PROFILE: ${ACME_LIVE_PROFILE}
+        # A host path, not the keys: the test runner reads ls-alias and ls-app-apikey from it (a
+        # simulator can read the host filesystem) and hands them to the app it launches.
+        ACME_LIVESYNC_STATE_DIR: ${ACME_LIVESYNC_STATE_DIR}
+        ACME_CONNECT_INSTANCE_URL: ${ACME_CONNECT_INSTANCE_URL}

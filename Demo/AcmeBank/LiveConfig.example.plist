@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Live mode settings. Generate yours with `npm run app-config` in the demo backend and save it as
+     Resources/LiveConfig.plist (gitignored). Identifiers only: no keys or credentials go here. -->
+<plist version="1.0">
+<dict>
+	<key>ACME_LIVE_ENDPOINT</key>
+	<string>https://abc123.execute-api.us-west-2.amazonaws.com</string>
+	<key>ACME_LIVE_REGION</key>
+	<string>us-west-2</string>
+	<key>ACME_COGNITO_USER_POOL_ID</key>
+	<string>us-west-2_EXAMPLE</string>
+	<key>ACME_COGNITO_CLIENT_ID</key>
+	<string>exampleclientid</string>
+	<key>ACME_COGNITO_IDENTITY_POOL_ID</key>
+	<string>us-west-2:00000000-0000-0000-0000-000000000000</string>
+	<key>ACME_CONNECT_INSTANCE_URL</key>
+	<string>https://your-instance.my.connect.aws</string>
+</dict>
+</plist>
